@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Talent | Simple Remote Staffing & Global Talent Solutions</title>
+    <meta name="description" content="Prime Talent helps North American businesses find, hire, and manage great remote team members for back-office, admin, and everyday support.">
+    <meta name="keywords" content="Remote Staffing, Hire Virtual Assistants, Back Office Support, Remote Workers, Find Talent, Remote Team">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="Prime Talent | Simple Remote Staffing Solutions">
+    <meta property="og:description" content="Grow your business with amazing, vetted remote team members.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Prime Talent">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        .portal-view { transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; }
+        .form-input-focus { transition: all 0.2s ease-in-out; }
+        .form-input-focus:focus {
+            border-color: #0f172a;
+            box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50/50 text-slate-700 font-sans scroll-smooth antialiased h-full flex flex-col">
+
+    <header class="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5 group">
+                <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center transition-transform group-hover:scale-105">
+                    <i class="fa-solid fa-cubes-stacked text-white text-sm"></i>
+                </div>
+                <span class="text-lg">PRIME <span class="text-slate-400 font-light tracking-wide">TALENT</span></span>
+            </a>
+            
+            <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600">
+                <a href="#services-section" class="hover:text-slate-900 transition-colors">Our Services</a>
+                <a href="#industries-section" class="hover:text-slate-900 transition-colors">Who We Help</a>
+                <a href="#why-choose-us-section" class="hover:text-slate-900 transition-colors">Why Prime</a>
+                <a href="#about-section" class="hover:text-slate-900 transition-colors">About Us</a>
+                <a href="#careers-section" class="hover:text-emerald-600 transition-colors text-emerald-600/90 font-semibold">Join the Team</a>
+                <a href="#booking-section" class="hover:text-indigo-700 transition-colors text-indigo-600 font-semibold">Book a Call</a>
+                <a href="#contact-section" class="hover:text-slate-900 transition-colors text-slate-900 border-l border-slate-200 pl-4">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="auth-status-btn" onclick="handleAuthNavClick()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-[11px]"></i> <span id="auth-btn-text">Portal Login</span>
+                </button>
+
+                <button onclick="toggleMobileMenu()" class="lg:hidden text-slate-700 hover:text-slate-900 focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition-colors" aria-label="Toggle Menu">
+                    <i id="hamburger-icon" class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white shadow-xl flex flex-col text-left divide-y divide-slate-50 overflow-hidden">
+            <a href="#services-section" onclick="toggleMobileMenu();" class="text-sm font-medium text-slate-600 hover:bg-slate-50 px-6 py-3.5 flex items-center justify-between transition-colors">
+                <span>Our Services</span> <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+            </a>
+            <a href="#industries-section" onclick="toggleMobileMenu();" class="text-sm font-medium text-slate-600 hover:bg-slate-50 px-6 py-3.5 flex items-center justify-between transition-colors">
+                <span>Who We Help</span> <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+            </a>
+            <a href="#why-choose-us-section" onclick="toggleMobileMenu();" class="text-sm font-medium text-slate-600 hover:bg-slate-50 px-6 py-3.5 flex items-center justify-between transition-colors">
+                <span>Why Choose Us</span> <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+            </a>
+            <a href="#about-section" onclick="toggleMobileMenu();" class="text-sm font-medium text-slate-600 hover:bg-slate-50 px-6 py-3.5 flex items-center justify-between transition-colors">
+                <span>About Us</span> <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+            </a>
+            <a href="#careers-section" onclick="toggleMobileMenu();" class="text-sm font-semibold text-emerald-600 hover:bg-emerald-50/50 px-6 py-3.5 flex items-center justify-between transition-colors">
+                <span>Careers &amp; Job Openings</span> <i class="fa-solid fa-chevron-right text-[10px] text-emerald-400"></i>
+            </a>
+            <a href="#booking-section" onclick="toggleMobileMenu();" class="text-sm font-semibold text-indigo-600 hover:bg-indigo-50/50 px-6 py-3.5 flex items-center justify-between transition-colors">
+                <span>Schedule a Consultation</span> <i class="fa-solid fa-chevron-right text-[10px] text-indigo-400"></i>
+            </a>
+            <a href="#contact-section" onclick="toggleMobileMenu();" class="text-sm font-medium text-slate-900 hover:bg-slate-50 px-6 py-3.5 flex items-center justify-between transition-colors">
+                <span>Contact Us</span> <i class="fa-solid fa-chevron-right text-[10px] text-slate-500"></i>
+            </a>
+        </div>
+    </header>
+
+    <div id="authenticated-dashboard" class="bg-indigo-950 text-white py-3.5 border-b border-indigo-900 hidden transition-all">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span id="dashboard-welcome-msg" class="text-xs font-medium tracking-wide text-indigo-100"></span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="dashboard-role-badge" class="text-[10px] uppercase font-bold tracking-widest bg-indigo-900 px-2.5 py-1 rounded border border-indigo-800"></span>
+                <button onclick="logoutSession()" class="text-xs text-indigo-300 hover:text-white underline transition font-medium">Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow">
+        <div id="client-dashboard-workspace" class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl py-12 hidden transition-all">
+        </div>
+
+        <section id="hero-landing-pane" class="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 py-28 text-white relative overflow-hidden border-b border-slate-900">
+            <div class="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+            
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center relative z-10">
+                <span class="text-indigo-400 font-bold text-xs uppercase tracking-widest block mb-4 bg-indigo-500/10 w-fit mx-auto px-3 py-1 rounded-full border border-indigo-500/20">Great Teams, Made Simple</span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.15]">
+                    Grow Your Business with Amazing Remote Talent
+                </h1>
+                <p class="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed">
+                    We match North American companies with friendly, fully-vetted remote professionals to take care of your administrative tasks, data entry, and daily operations.
+                </p>
+                
+                <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto sm:max-w-none">
+                    <a href="#client-portal" class="w-full sm:w-auto bg-slate-100 hover:bg-white text-slate-950 font-semibold py-3.5 px-8 rounded-xl transition-all duration-200 shadow-lg shadow-black/20 flex flex-col items-center justify-center text-center transform hover:-translate-y-0.5">
+                        <span class="text-sm">Find a Team Member</span>
+                        <span class="text-[11px] text-slate-500 font-normal mt-0.5">See choices for your business</span>
+                    </a>
+                    <a href="#careers-section" class="w-full sm:w-auto bg-slate-900/80 border border-slate-800 text-slate-200 font-semibold py-3.5 px-8 rounded-xl transition-all duration-200 hover:bg-slate-800 shadow-md flex flex-col items-center justify-center text-center transform hover:-translate-y-0.5">
+                        <span class="text-sm">Apply for a Job</span>
+                        <span class="text-[11px] text-emerald-400 font-normal mt-0.5">Explore our open remote roles</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHOOSE YOUR PLAN SECTION -->
+        <section id="client-portal" class="portal-view py-20 bg-white border-b border-slate-200 scroll-mt-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <div class="mb-12 max-w-3xl">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-2">Choose Your Plan</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Simple Pricing Plans Built for Growth</h2>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8 items-stretch mb-12">
+                    <div class="border border-slate-200 p-8 rounded-2xl bg-slate-50/50 flex flex-col justify-between hover:border-slate-300 transition-colors">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-lg">Starter Plan</h4>
+                            <p class="text-4xl font-extrabold text-slate-900 my-4">$1,500 <span class="text-xs text-slate-400 font-normal">/ month</span></p>
+                            <ul class="space-y-3.5 text-sm text-slate-600 border-t border-slate-200 pt-6 font-normal">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-600 text-xs"></i> Look at up to 5 candidate choices</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-600 text-xs"></i> 1 Dedicated Remote Assistant</li>
+                            </ul>
+                        </div>
+                        <button onclick="scrollAndFocusForm()" class="mt-8 w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-sm">Get Started</button>
+                    </div>
+                    <div class="border-2 border-slate-900 p-8 rounded-2xl bg-white relative flex flex-col justify-between shadow-xl shadow-slate-100 transform lg:-translate-y-2">
+                        <span class="absolute -top-3 left-6 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-indigo-500 shadow-sm">Most Popular</span>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-lg">Growth Plan</h4>
+                            <p class="text-4xl font-extrabold text-slate-900 my-4">$3,000 <span class="text-xs text-slate-400 font-normal">/ month</span></p>
+                            <ul class="space-y-3.5 text-sm text-slate-600 border-t border-slate-200 pt-6 font-normal">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-600 text-xs"></i> Look at up to 15 candidate choices</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-600 text-xs"></i> 1 Dedicated Hiring Coordinator</li>
+                            </ul>
+                        </div>
+                        <button onclick="scrollAndFocusForm()" class="mt-8 w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-md">Get Started</button>
+                    </div>
+                    <div class="border border-slate-200 p-8 rounded-2xl bg-slate-50/50 flex flex-col justify-between hover:border-slate-300 transition-colors">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-lg">Enterprise Plan</h4>
+                            <p class="text-4xl font-extrabold text-slate-900 my-4">$6,000+ <span class="text-xs text-slate-400 font-normal">/ month</span></p>
+                            <ul class="space-y-3.5 text-sm text-slate-600 border-t border-slate-200 pt-6 font-normal">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-600 text-xs"></i> Uncapped candidate searches &amp; hiring</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-indigo-600 text-xs"></i> Custom team building &amp; strategy help</li>
+                            </ul>
+                        </div>
+                        <a href="#booking-section" class="mt-8 block text-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-sm">Talk to an Expert</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="main-content-informational-wrapper" class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl mt-16">
+            
+            <section id="services-section" class="scroll-mt-24 border-b border-slate-200/60 pb-16 mb-16">
+                <div class="max-w-3xl mb-10">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-2">How it works</span>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                        <i class="fa-solid fa-briefcase text-slate-800 text-xl"></i> Our Staffing Services
+                    </h3>
+                    <p class="text-sm text-slate-500 mt-2 font-normal">We take the stress out of hiring so you can focus on growing your business.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6 text-sm text-slate-600 leading-relaxed">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <h4 class="font-bold text-slate-900 text-base mb-3">Custom Talent Matching</h4>
+                        <p class="text-slate-500 font-normal">We handle the entire search process, running deep background and skill checks to match you with top talent that fits your workflows perfectly.</p>
+                    </div>
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <h4 class="font-bold text-slate-900 text-base mb-3">Safe &amp; Secure Setup</h4>
+                        <p class="text-slate-500 font-normal">Your team and data are protected. We use clean, reliable tracking setups and security rules so your everyday processes run safely.</p>
+                    </div>
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+                        <h4 class="font-bold text-slate-900 text-base mb-3">Ready from Day One</h4>
+                        <p class="text-slate-500 font-normal">Our assistants are already trained on popular tools (like real estate management software, CRM platforms, and basic accounting tools) to save you onboarding time.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="industries-section" class="pt-4 pb-16 scroll-mt-24 border-b border-slate-200/60 mb-16">
+                <h3 class="font-bold text-xs uppercase tracking-wider text-slate-400 mb-8 flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired text-slate-400"></i> The Industries We Serve
+                </h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white border border-slate-200/80 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center mb-5 shadow-sm">
+                            <i class="fa-solid fa-heart-pulse text-white text-sm"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base mb-2">Healthcare &amp; Clinics</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed font-normal">Patient scheduling, managing intake forms, medical billing support, and updating clinic records safely.</p>
+                    </div>
+                    <div class="bg-white border border-slate-200/80 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center mb-5 shadow-sm">
+                            <i class="fa-solid fa-building text-white text-sm"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base mb-2">Real Estate &amp; Property Management</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed font-normal">Processing leases, tracking late payments, coordination for maintenance work orders, and updating property listings.</p>
+                    </div>
+                    <div class="bg-white border border-slate-200/80 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center mb-5 shadow-sm">
+                            <i class="fa-solid fa-utensils text-white text-sm"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base mb-2">Hospitality &amp; Travel</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed font-normal">Managing online booking calendars, answering guest inquiries, handling email requests, and updating back-office lists.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="why-choose-us-section" class="scroll-mt-24 border-b border-slate-200/60 pb-16 mb-16">
+                <div class="max-w-3xl mb-10">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-2">The Prime Advantage</span>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-3">
+                        <i class="fa-solid fa-star text-slate-800 text-xl"></i> Why Businesses Love Us
+                    </h3>
+                    <p class="text-sm text-slate-500 mt-2 font-normal">We build our service around speed, clear pricing, and reliable people.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6 text-sm text-slate-600 leading-relaxed">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <h4 class="font-bold text-slate-900 text-base mb-2">Great Workstations Only</h4>
+                        <p class="text-slate-500 font-normal">We test all candidate computer setups before hiring. Your remote team will always have fast, responsive machines ready for everyday tasks.</p>
+                    </div>
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <h4 class="font-bold text-slate-900 text-base mb-2">Backup Internet is Built-In</h4>
+                        <p class="text-slate-500 font-normal">We make sure our team members have power backups and secondary internet lines. This means your work keeps going, no matter what.</p>
+                    </div>
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <h4 class="font-bold text-slate-900 text-base mb-2">No Hidden Fees</h4>
+                        <p class="text-slate-500 font-normal">Say goodbye to the stress and high costs of traditional hiring. Get a clear, simple flat monthly plan that makes planning your budget incredibly easy.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about-section" class="scroll-mt-24 border-b border-slate-200/60 pb-16 mb-24">
+    <div class="bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 text-white p-8 sm:p-12 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
+        
+        <div class="mb-8">
+            <span class="text-xs text-indigo-400 uppercase font-bold tracking-widest block mb-2">Our Foundation &amp; Leadership</span>
+            <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
+                <i class="fa-solid fa-building-shield text-indigo-400 text-xl"></i> About Barbat Holdings
+            </h3>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 text-sm text-slate-300 leading-relaxed font-normal border-t border-slate-800/80 pt-6 mb-8">
+            <div>
+                <h4 class="text-white font-bold text-base mb-2">Expertise, Knowledge, and Service</h4>
+                <p class="mb-4">We maintain a rigorous, hands-on operational approach across our diverse portfolio, staying informed and highly organized for every project. As an industry-leading investment and management organization, our footprints span deep within commercial real estate, asset acquisition, and enterprise scaling frameworks.</p>
+                <p>Our real estate enterprise evaluated businesses at all stages, successfully developing, acquiring, and managing over <strong>two million square feet</strong> of high-performance space across the office, medical, retail, and mixed-use property categories.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-base mb-2">Strategic Investment Verticals</h4>
+                <p class="mb-4">Beyond physical footprints, Barbat Holdings operates as an aggressive catalyst in private equity and market innovation. We leverage deep domain knowledge to evaluate, deploy capital, and add operational excellence to high-yield businesses.</p>
+                <p>Our current holding ecosystem is diversified extensively across premier sectors, including commercial real estate assets, the wireless communications ecosystem, hospitality initiatives, and high-density multi-family residential sectors.</p>
+            </div>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 mt-4 grid md:grid-cols-3 gap-6 items-center">
+            <div class="md:col-span-2">
+                <span class="text-[10px] bg-indigo-500/20 text-indigo-300 font-bold px-2.5 py-1 rounded border border-indigo-500/30 uppercase tracking-widest">Founder &amp; Chairman</span>
+                <h4 class="text-xl font-bold text-white mt-2.5 mb-2">Joe Barbat</h4>
+                <p class="text-xs text-slate-400 font-normal leading-relaxed">
+                    Pioneering the modern wireless retail architecture by consolidating multiple carriers into single consumer-facing footprints, Joe Barbat scaled his first organization from a single workspace into a multi-million dollar corporation spanning 200 physical locations across 24 states. His strategic execution earned him selection as an <strong>Ernst &amp; Young Entrepreneur of the Year</strong> Central Great Lakes Award Recipient.
+                </p>
+                <div class="mt-4 pt-4 border-t border-white/5 flex flex-wrap gap-x-4 gap-y-2 text-[11px] text-slate-400 font-normal">
+                    <span class="text-indigo-400 font-semibold"><i class="fa-solid fa-hand-holding-heart mr-1"></i> Supporting:</span>
+                    <span>March of Dimes</span> • <span>Feed the Children</span> • <span>Habitat for Humanity</span> • <span>Adopt a Refugee</span>
+                </div>
+            </div>
+            
+            <div class="bg-slate-950/40 border border-white/5 p-5 rounded-xl h-full flex flex-col justify-center">
+                <h5 class="text-xs uppercase tracking-widest font-bold text-indigo-400 mb-3"><i class="fa-solid fa-award mr-1"></i> Executive Accolades</h5>
+                <ul class="space-y-2 text-[11px] text-slate-300 font-normal">
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-trophy text-amber-400 text-[10px] mt-0.5"></i> <span>Inc. 500 Fastest Growing Companies</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-trophy text-amber-400 text-[10px] mt-0.5"></i> <span>Crain's Detroit "40 Under 40"</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-trophy text-amber-400 text-[10px] mt-0.5"></i> <span>Entrepreneur Franchise 500 Recognition</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-trophy text-amber-400 text-[10px] mt-0.5"></i> <span>Michigan's Top Private 200 Enterprise</span></li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+</section>
+        </div>
+
+        <!-- Forms & Booking Layout Panel -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+            <div id="client-form" class="bg-slate-50 border border-slate-200/80 p-6 sm:p-10 rounded-2xl max-w-2xl mx-auto shadow-sm scroll-mt-28 mb-24">
+                <h4 class="text-xl font-bold text-slate-900 text-center mb-1">Tell Us What You Need</h4>
+                <p class="text-slate-500 text-xs text-center mb-8 font-normal">Fill out this quick form and our team will reach out to help you find the right fit.</p>
+                
+                <form id="clientIngestionForm" class="space-y-5" onsubmit="handleClientSubmission(event)">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Company Name</label>
+                            <input type="text" id="client_company" required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Your Name</label>
+                            <input type="text" id="client_contact_name" required placeholder="First &amp; Last Name" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Work Email Address</label>
+                            <input type="email" id="client_email" required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">What is your industry?</label>
+                            <select id="client_industry" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-600 focus:outline-none focus:border-slate-900 transition-colors">
+                                <option value="Healthcare">Healthcare &amp; Medical Clinics</option>
+                                <option value="Real Estate">Real Estate &amp; Property Management</option>
+                                <option value="Hospitality">Hospitality (Hotels, Food &amp; Beverage)</option>
+                                <option value="Corporate Ops">General Business Office Support</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-b border-dashed border-slate-200 py-5 my-2">
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-800 tracking-wider mb-1.5">How many team members?</label>
+                            <select id="client_scale" class="w-full px-3 py-2 bg-white border border-slate-200 rounded text-xs text-slate-600 focus:outline-none focus:border-slate-400 transition-colors">
+                                <option>1 - 3 People</option>
+                                <option>4 - 10 People</option>
+                                <option>11 - 20 People</option>
+                                <option>20+ Large Team</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-800 tracking-wider mb-1.5">How fast do you need them?</label>
+                            <select id="client_urgency" class="w-full px-3 py-2 bg-white border border-slate-200 rounded text-xs text-slate-600 focus:outline-none focus:border-slate-400 transition-colors">
+                                <option>Right away (Next 2 weeks)</option>
+                                <option>In the next 30-60 days</option>
+                                <option>Just browsing for now</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-800 tracking-wider mb-1.5">Preferred Time Zone</label>
+                            <select id="client_shift_need" class="w-full px-3 py-2 bg-white border border-slate-200 rounded text-xs text-slate-600 focus:outline-none focus:border-slate-400 transition-colors">
+                                <option>Eastern Time (EST)</option>
+                                <option>Central Time (CST)</option>
+                                <option>Pacific Time (PST)</option>
+                                <option>Flexible Schedule</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">What software tools do you use?</label>
+                        <input type="text" id="client_software" placeholder="e.g., AppFolio, Excel, QuickBooks, HubSpot, Salesforce" required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Briefly describe the day-to-day tasks</label>
+                        <textarea id="client_requirement" rows="3" placeholder="Tell us a little bit about what your remote assistant will be helping you with..." class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl text-xs tracking-widest uppercase transition shadow shadow-black/10">Submit Information</button>
+                </form>
+            </div>
+
+            <div id="careers-section" class="scroll-mt-24 border-t border-slate-200 pt-16 mb-24">
+                <div class="mb-12 max-w-3xl">
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-2">We Are Hiring!</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Apply for a Great Remote Job</h2>
+                    <p class="text-slate-500 text-sm font-normal mt-2">Send your information to our hiring team to get matched with great companies in North America.</p>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 sm:p-10 rounded-2xl max-w-2xl mx-auto shadow-sm">
+                    <h4 class="text-xl font-bold text-slate-900 text-center mb-1">Job Application Form</h4>
+                    <p class="text-slate-500 text-xs text-center mb-8 font-normal">Tell us about your background, tools, and work setup.</p>
+                    
+                    <form id="vaApplicationForm" class="space-y-5" onsubmit="handleCandidateSubmission(event)">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Your Full Name</label>
+                                <input type="text" id="va_name" required placeholder="First &amp; Last Name" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Email Address</label>
+                                <input type="email" id="va_email" required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">What is your specialty?</label>
+                                <select id="va_discipline" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-600 focus:outline-none focus:border-slate-900 transition-colors">
+                                    <option>Medical Billing &amp; Scheduling Support</option>
+                                    <option>Real Estate &amp; Property Coordination</option>
+                                    <option>General Office Admin &amp; Data Entry</option>
+                                    <option>Executive Virtual Assistance</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Years of experience</label>
+                                <select id="va_experience" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-600 focus:outline-none focus:border-slate-900 transition-colors">
+                                    <option>Less than 1 Year</option>
+                                    <option>1 - 3 Years of Work Experience</option>
+                                    <option>3 - 5 Years of Work Experience</option>
+                                    <option>5+ Years of Experience</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-b border-dashed border-slate-200 py-5 my-2">
+                            <div>
+                                <label class="block text-[10px] uppercase font-bold text-slate-900 tracking-wider mb-1.5">Computer/Hardware Setup</label>
+                                <select id="va_hardware" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-600 focus:outline-none focus:border-slate-900 transition-colors">
+                                    <option>Standard Desktop / Laptop (8GB RAM + Core i5 or similar)</option>
+                                    <option>High-end Workstation (16GB+ RAM + Core i7 or similar)</option>
+                                    <option>Basic laptop setup</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase font-bold text-slate-900 tracking-wider mb-1.5">Do you have backup internet?</label>
+                                <select id="va_internet" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-600 focus:outline-none focus:border-slate-900 transition-colors">
+                                    <option>Yes, I have two separate internet lines</option>
+                                    <option>Yes, single line + phone hotspot backup</option>
+                                    <option>No, I only have one main internet line</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Link to Resume or LinkedIn Profile</label>
+                            <input type="url" id="va_resume_link" placeholder="https://drive.google.com/... or https://linkedin.com/in/..." required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">List the software tools you know well</label>
+                            <textarea id="va_tools" rows="2" placeholder="e.g., AppFolio, WebPT, QuickBooks, Excel, Salesforce, Canva..." required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-xs font-input-focus focus:outline-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl text-xs tracking-widest uppercase transition shadow shadow-emerald-600/10">Submit My Application</button>
+                    </form>
+                </div>
+            </div>
+
+            <section id="booking-section" class="scroll-mt-24 border-t border-slate-200 pt-16 mb-24">
+                <div class="text-center mb-10">
+                    <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Pick a Time to Talk</h3>
+                    <p class="text-sm text-slate-500 font-normal mt-2">Find a convenient time below to jump on a friendly call with one of our coordinators.</p>
+                </div>
+                
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden shadow-inner p-2 max-w-4xl mx-auto">
+                    <div class="calendly-inline-widget w-full" data-url="https://calendly.com/cloud000argando28/30min" style="min-width:320px; height:650px;"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- System Modals Below -->
+        <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 relative border border-slate-200 transform transition-all">
+                <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-50 transition-colors text-base">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <div id="auth-modal-tabs" class="flex border-b border-slate-200 mb-6">
+                    <button id="tab-login" onclick="toggleAuthTab('login')" class="flex-1 pb-3 text-sm font-bold border-b-2 border-slate-900 text-slate-900 focus:outline-none">Sign In</button>
+                    <button id="tab-signup" onclick="toggleAuthTab('signup')" class="flex-1 pb-3 text-sm font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-600 focus:outline-none">Create Account</button>
+                </div>
+
+                <!-- SIGN IN PANEL -->
+                <div id="login-form-panel">
+                    <h3 class="text-lg font-bold text-slate-900 mb-1">Welcome Back</h3>
+                    <p class="text-xs text-slate-400 mb-5 font-normal">Log into your account below.</p>
+                    
+                    <form id="authLoginForm" class="space-y-4" onsubmit="executeUserLogin(event)">
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Email Address</label>
+                            <input type="email" id="login_email" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-input-focus focus:bg-white focus:outline-none">
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">Password</label>
+                                <button type="button" onclick="toggleAuthTab('forgot')" class="text-[10px] text-indigo-600 hover:text-indigo-800 font-bold focus:outline-none">Forgot Password?</button>
+                            </div>
+                            <input type="password" id="login_password" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-input-focus focus:bg-white focus:outline-none">
+                        </div>
+                        <button id="login-submit-btn" type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs tracking-wider uppercase transition shadow-md mt-2">Log In Safely</button>
+                    </form>
+                </div>
+
+                <!-- CREATE ACCOUNT PANEL -->
+                <div id="signup-form-panel" class="hidden">
+                    <h3 class="text-lg font-bold text-slate-900 mb-1">Create an Account</h3>
+                    <p class="text-xs text-slate-400 mb-5 font-normal">Sign up to view updates and track your requests on the sites.</p>
+                    
+                    <form id="authSignupForm" class="space-y-4" onsubmit="executeUserSignup(event)">
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Account Type</label>
+                            <select id="signup_role" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 font-semibold focus:bg-white focus:outline-none focus:border-slate-900 transition-colors">
+                                <option value="client">I am a Business Owner / Client</option>
+                                <option value="va">I am a Remote Assistant / Job Seeker</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Your Full Name or Business Name</label>
+                            <input type="text" id="signup_name" required placeholder="e.g., John Doe or Acme LLC" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-input-focus focus:bg-white focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Email Address</label>
+                            <input type="email" id="signup_email" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-input-focus focus:bg-white focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Create Password</label>
+                            <input type="password" id="signup_password" required minlength="6" placeholder="At least 6 characters" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-input-focus focus:bg-white focus:outline-none">
+                        </div>
+                        <button id="signup-submit-btn" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl text-xs tracking-wider uppercase transition shadow-md mt-2">Sign Up Securely</button>
+                    </form>
+                </div>
+
+                <!-- FORGOT PASSWORD PANEL -->
+                <div id="forgot-form-panel" class="hidden">
+                    <h3 class="text-lg font-bold text-slate-900 mb-1">Account Recovery</h3>
+                    <p class="text-xs text-slate-400 mb-5 font-normal">Enter your registered corporate account email address below to receive password restoration workflows.</p>
+                    
+                    <form id="authForgotForm" class="space-y-4" onsubmit="executePasswordRecovery(event)">
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Email Address</label>
+                            <input type="email" id="forgot_email" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-input-focus focus:bg-white focus:outline-none">
+                        </div>
+                        <button id="forgot-submit-btn" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl text-xs tracking-wider uppercase transition shadow-md mt-2">Transmit Reset Token</button>
+                        <button type="button" onclick="toggleAuthTab('login')" class="w-full text-center text-xs text-slate-500 hover:text-slate-800 font-semibold underline block pt-2 focus:outline-none">Return to Portal Sign In</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="billing-portal-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 relative border border-slate-200 overflow-y-auto max-h-[90vh]">
+                <button onclick="closeModal('billing-portal-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-50 transition-colors text-base">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-5 mb-6">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-base border border-indigo-100 shadow-sm">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Payment &amp; Billing Desk</h3>
+                        <p class="text-xs text-slate-400 font-normal">Complete your payment details to start matching with talent.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-4 mb-6 grid grid-cols-2 gap-4 text-xs font-normal">
+                    <div>
+                        <span class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-0.5">Account Name</span>
+                        <span id="billing-client-name" class="font-bold text-slate-800">-</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-0.5">Payment Status</span>
+                        <span id="billing-payment-status" class="px-2 py-0.5 rounded bg-amber-50 text-amber-700 font-semibold text-[10px] border border-amber-200 inline-block mt-0.5">Awaiting Payment</span>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h4 class="text-[11px] uppercase font-bold text-slate-900 tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-building-columns text-slate-400"></i> Bank Transfer Instructions
+                    </h4>
+                    <div class="bg-slate-950 text-slate-300 font-mono text-[11px] p-4 rounded-xl space-y-1.5 border border-slate-800 shadow-inner">
+                        <div><span class="text-slate-500">Bank Name:</span> Prime Clearing Desk</div>
+                        <div><span class="text-slate-500">Routing Number:</span> 021000021</div>
+                        <div><span class="text-slate-500">Account Number:</span> 8839-4401-2291</div>
+                        <div><span class="text-slate-500">Invoice Reference:</span> <span id="billing-invoice-ref" class="text-indigo-400 font-bold">PT-INV</span></div>
+                    </div>
+                </div>
+
+                <form id="billingNotificationForm" class="space-y-4" onsubmit="executePaymentLogTransmission(event)">
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Amount Sent ($ USD)</label>
+                        <input type="number" id="billing_amount" required min="1" placeholder="3000" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold font-input-focus focus:bg-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Transaction Reference ID / Confirmation Number</label>
+                        <input type="text" id="billing_reference" required placeholder="e.g., BRN-88291049-X" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-input-focus focus:bg-white focus:outline-none font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1.5">Link to Payment Proof (Optional URL/Upload Link)</label>
+                        <input type="text" id="billing_proof_url" placeholder="Paste link to your deposit receipt or slip..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-input-focus focus:bg-white focus:outline-none">
+                    </div>
+
+                    <button id="billing-submit-btn" type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl text-xs tracking-widest uppercase transition shadow-md mt-4">Confirm Payment Notice</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <section id="contact-section" class="bg-slate-950 text-white py-20 border-t border-slate-900 scroll-mt-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest block mb-2">Get in Touch</span>
+                <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">We're Here to Help</h3>
+                <p class="text-slate-400 text-sm mt-2 font-normal">Reach out directly to talk about your company or ask questions about the sites.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 text-center md:text-left">
+                <div class="border border-slate-800/80 p-6 sm:p-8 rounded-2xl bg-slate-900/40 backdrop-blur-sm">
+                    <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center mb-5 mx-auto md:mx-0 shadow-sm border border-slate-700/50">
+                        <i class="fa-solid fa-building-shield text-indigo-400 text-sm"></i>
+                    </div>
+                    <h4 class="text-xs uppercase font-bold tracking-wider text-slate-200 mb-2">Our Office</h4>
+                    <p class="text-xs text-slate-400 font-normal leading-relaxed">Barbat Holdings, LLC<br>7499 Middlebelt Rd, West<br>Bloomfield Township, MI 48322</p>
+                </div>
+                <div class="border border-slate-800/80 p-6 sm:p-8 rounded-2xl bg-slate-900/40 backdrop-blur-sm">
+                    <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center mb-5 mx-auto md:mx-0 shadow-sm border border-slate-700/50">
+                        <i class="fa-solid fa-headset text-indigo-400 text-sm"></i>
+                    </div>
+                    <h4 class="text-xs uppercase font-bold tracking-wider text-slate-200 mb-2">Email Support</h4>
+                    <p class="text-xs text-slate-400 font-normal leading-relaxed">Hiring Help: solutions@primetalent.co<br>General Inquiries: operations@primetalent.co<br>We reply in less than 12 hours!</p>
+                </div>
+                <div class="border border-slate-800/80 p-6 sm:p-8 rounded-2xl bg-slate-900/40 backdrop-blur-sm">
+                    <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center mb-5 mx-auto md:mx-0 shadow-sm border border-slate-700/50">
+                        <i class="fa-solid fa-clock text-indigo-400 text-sm"></i>
+                    </div>
+                    <h4 class="text-xs uppercase font-bold tracking-wider text-slate-200 mb-2">Support Hours</h4>
+                    <p class="text-xs text-slate-400 font-normal leading-relaxed">Monday &ndash; Friday<br>09:00 AM &ndash; 05  :00 PM EST<br>System monitoring is active 24/7</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-slate-500 py-10 text-center text-xs border-t border-slate-900 font-normal tracking-wide">
+        <p>&copy; 2026 Prime Talent Corporation. All rights reserved globally.</p>
+    </footer>
+
+    <script>
+        // ==========================================
+        // 🛠️ SUPABASE CONFIGURATION
+        // ==========================================
+        const SUPABASE_URL = "https://sjifdnskknbputhkhctk.supabase.co"; 
+        const SUPABASE_ANON_KEY = "sb_publishable_0SWNYKKl1Bx8dqAijwDmMg_-eeI_ijv"; 
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let globalUserSession = null;
+        let globalUserProfile = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await checkCurrentSession();
+        });
+
+        async function checkCurrentSession() {
+            try {
+                const { data, error } = await supabaseClient.auth.getSession();
+                if (data?.session) {
+                    globalUserSession = data.session;
+                    await fetchAndRenderUserProfile();
+                } else {
+                    globalUserSession = null;
+                    globalUserProfile = null;
+                    updateUIForLoggedOutState();
+                }
+            } catch (e) {
+                console.error("Session check error:", e);
+            }
+        }
+
+        async function fetchAndRenderUserProfile() {
+            if (!globalUserSession) return;
+            const user = globalUserSession.user;
+            
+            const { data: profile, error } = await supabaseClient
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+
+            if (!error && profile) {
+                globalUserProfile = profile;
+                updateUIForLoggedInState(user.email, profile);
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('hamburger-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = "fa-solid fa-xmark text-lg";
+            } else {
+                menu.classList.add('hidden');
+                icon.className = "fa-solid fa-bars text-lg";
+            }
+        }
+
+        function openModal(id) { 
+            const targetModal = document.getElementById(id);
+            if (targetModal) targetModal.classList.remove('hidden');
+        }
+
+        function closeModal(id) { 
+            const targetModal = document.getElementById(id);
+            if (targetModal) targetModal.classList.add('hidden');
+        }
+
+        function handleAuthNavClick() {
+            if (globalUserSession) {
+                const workspace = document.getElementById('client-dashboard-workspace');
+                workspace.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                toggleAuthTab('login');
+                openModal('auth-modal');
+            }
+        }
+
+        function toggleAuthTab(mode) {
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+            const panelLogin = document.getElementById('login-form-panel');
+            const panelSignup = document.getElementById('signup-form-panel');
+            const panelForgot = document.getElementById('forgot-form-panel');
+            const tabContainer = document.getElementById('auth-modal-tabs');
+
+            if (mode === 'login') {
+                tabContainer.classList.remove('hidden');
+                tabLogin.className = "flex-1 pb-3 text-sm font-bold border-b-2 border-slate-900 text-slate-900";
+                tabSignup.className = "flex-1 pb-3 text-sm font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+                panelLogin.classList.remove('hidden');
+                panelSignup.classList.add('hidden');
+                panelForgot.classList.add('hidden');
+            } else if (mode === 'signup') {
+                tabContainer.classList.remove('hidden');
+                tabSignup.className = "flex-1 pb-3 text-sm font-bold border-b-2 border-slate-900 text-slate-900";
+                tabLogin.className = "flex-1 pb-3 text-sm font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+                panelSignup.classList.remove('hidden');
+                panelLogin.classList.add('hidden');
+                panelForgot.classList.add('hidden');
+            } else if (mode === 'forgot') {
+                tabContainer.classList.add('hidden');
+                panelForgot.classList.remove('hidden');
+                panelLogin.classList.add('hidden');
+                panelSignup.classList.add('hidden');
+            }
+        }
+
+        function scrollAndFocusForm() {
+            const targetPane = document.getElementById('client-form');
+            if (targetPane) {
+                targetPane.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => {
+                    const inputField = document.getElementById('client_company');
+                    if (inputField) inputField.focus();
+                }, 600);
+            }
+        }
+
+        // ==========================================
+        // 🔐 AUTHENTICATION LOGIC
+        // ==========================================
+        async function executeUserSignup(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('signup-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "CREATING SECURE ACCOUNT...";
+
+            const role = document.getElementById('signup_role').value;
+            const name = document.getElementById('signup_name').value.trim();
+            const email = document.getElementById('signup_email').value.trim().toLowerCase();
+            const password = document.getElementById('signup_password').value;
+
+            try {
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name,         
+                            account_role: role       
+                        }
+                    }
+                });
+
+                if (error) {
+                    alert('Sign up failed: ' + error.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Sign Up Securely";
+                    return;
+                }
+
+                if (data?.user) {
+                    alert('Registration successful! Please check your email inbox to confirm your account before logging in.');
+                    closeModal('auth-modal');
+                    document.getElementById('authSignupForm').reset();
+                }
+            } catch (err) {
+                console.error("Signup scope lifecycle error:", err);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Sign Up Securely";
+            }
+        }
+
+        async function executeUserLogin(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            const submitBtn = document.getElementById('login-submit-btn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerText = "VERIFYING CREDENTIALS...";
+            }
+
+            const emailInput = document.getElementById('login_email');
+            const passwordInput = document.getElementById('login_password');
+
+            if (!emailInput || !passwordInput) {
+                alert("System Error: Login components are missing in the DOM context.");
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Log In Safely";
+                }
+                return false;
+            }
+
+            const email = emailInput.value.trim().toLowerCase();
+            const password = passwordInput.value;
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    alert('Log in failed: ' + error.message);
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = "Log In Safely";
+                    }
+                    return false;
+                }
+
+                if (data?.session) {
+                    globalUserSession = data.session;
+                    
+                    const { data: profile, error: profileError } = await supabaseClient
+                        .from('profiles')
+                        .select('*')
+                        .eq('id', data.session.user.id)
+                        .single();
+
+                    if (!profileError && profile) {
+                        globalUserProfile = profile;
+                        
+                        closeModal('auth-modal');
+                        document.getElementById('authLoginForm').reset();
+                        
+                        updateUIForLoggedInState(data.session.user.email, profile);
+                        
+                        setTimeout(() => {
+                            const workspace = document.getElementById('client-dashboard-workspace');
+                            if (workspace) workspace.scrollIntoView({ behavior: 'smooth' });
+                        }, 300);
+                    } else {
+                        alert("Authenticated successfully, but no matching row was found inside public.profiles. Check your Insert RLS rules.");
+                    }
+                }
+            } catch (err) {
+                console.error("Login intercept crash block:", err);
+                alert("An unexpected layout error occurred during sign in.");
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Log In Safely";
+                }
+            }
+            
+            return false;
+        }
+
+        async function executePasswordRecovery(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('forgot-submit-btn');
+            const emailInput = document.getElementById('forgot_email');
+            
+            if (!emailInput) return;
+            const email = emailInput.value.trim().toLowerCase();
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "TRANSMITTING RESTORATION LINK...";
+
+            try {
+                const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin
+                });
+
+                if (error) {
+                    alert('Recovery deployment failed: ' + error.message);
+                } else {
+                    alert('Password token sent successfully! Please check your email inbox to update your account access parameters.');
+                    document.getElementById('authForgotForm').reset();
+                    toggleAuthTab('login');
+                    closeModal('auth-modal');
+                }
+            } catch (err) {
+                console.error("Recovery workflow lifecycle exception:", err);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Transmit Reset Token";
+            }
+        }
+
+        async function logoutSession() {
+            await supabaseClient.auth.signOut();
+            alert('Logged out safely.');
+            window.location.reload();
+        }
+
+        // ==========================================
+        // 💾 DATABASE OPERATIONS LOGIC
+        // ==========================================
+        async function handleClientSubmission(event) {
+            event.preventDefault();
+            const form = document.getElementById('clientIngestionForm');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "SAVING ENCRYPTED DATA...";
+
+            const clientPayload = {
+                company_name: document.getElementById('client_company').value,
+                contact_name: document.getElementById('client_contact_name').value,
+                corporate_email: document.getElementById('client_email').value,
+                industry: document.getElementById('client_industry').value,
+                scale_need: document.getElementById('client_scale').value,
+                urgency_status: document.getElementById('client_urgency').value,
+                preferred_shift: document.getElementById('client_shift_need').value,
+                software_tools: document.getElementById('client_software').value,
+                task_description: document.getElementById('client_requirement').value
+            };
+
+            const { error } = await supabaseClient
+                .from('client_inquiries')
+                .insert([clientPayload]);
+
+            if (error) {
+                alert('Database Error: ' + error.message);
+            } else {
+                alert('Information saved perfectly! Now, let\'s create your account password to secure your metrics.');
+                document.getElementById('signup_name').value = clientPayload.contact_name;
+                document.getElementById('signup_email').value = clientPayload.corporate_email;
+                document.getElementById('signup_role').value = 'client';
+                form.reset();
+                toggleAuthTab('signup');
+                openModal('auth-modal');
+            }
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit Information";
+        }
+
+        async function handleCandidateSubmission(event) {
+    event.preventDefault();
+                // Validate if user has a running session first before triggering RLS restrictions
+    if (!globalUserSession) {
+        alert("To ensure data protection, please create an account or sign in before submitting your application files!");
+        
+        // Auto-fill the sign up matrix with whatever they typed so they don't lose progress
+        document.getElementById('signup_name').value = document.getElementById('va_name').value;
+        document.getElementById('signup_email').value = document.getElementById('va_email').value;
+        document.getElementById('signup_role').value = 'va';
+        
+        toggleAuthTab('signup');
+        openModal('auth-modal');
+        return; // Halt transmission early!
+    }
+
+
+    const form = document.getElementById('vaApplicationForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerText = "TRANSMITTING DATA MATRIX...";
+
+    // 1. Gather Candidate Form Data
+    const candidatePayload = {
+        name: document.getElementById('va_name').value,
+        email: document.getElementById('va_email').value,
+        specialty: document.getElementById('va_discipline').value,
+        experience_years: document.getElementById('va_experience').value,
+        hardware_setup: document.getElementById('va_hardware').value,
+        backup_internet: document.getElementById('va_internet').value,
+        resume_url: document.getElementById('va_resume_link').value,
+        software_known: document.getElementById('va_tools').value
+    };
+
+    try {
+        // 2. Insert into job_applications table
+        const { data: applicationData, error: appError } = await supabaseClient
+            .from('job_applications')
+            .insert([candidatePayload])
+            .select();
+
+        if (appError) {
+            throw new Error('Application submission failed: ' + appError.message);
+        }
+
+        // 3. Check if the user is already logged in
+        if (globalUserSession && globalUserSession.user) {
+            // User is already logged in, so we can save to profiles table immediately using their ID
+            const profilePayload = {
+                id: globalUserSession.user.id,
+                name: candidatePayload.name,
+                role: 'va' // Setting their profile role as a Remote Assistant
+            };
+
+            const { error: profileError } = await supabaseClient
+                .from('profiles')
+                .upsert([profilePayload], { onConflict: 'id' });
+
+            if (profileError) {
+                console.error('Profile sync error:', profileError.message);
+            }
+            
+            alert('Your application was submitted completely and profile updated!');
+            form.reset();
+        } else {
+            // 4. User is NOT logged in: Route them to create an account
+            alert('Your application details have been received! Now, let\'s create your account password to secure your portal.');
+            
+            // Pre-populate the sign-up modal fields with what they just typed
+            document.getElementById('signup_name').value = candidatePayload.name;
+            document.getElementById('signup_email').value = candidatePayload.email;
+            document.getElementById('signup_role').value = 'va'; // Set dropdown to Remote Assistant
+            
+            // Clear application form values
+            form.reset();
+            
+            // Toggle view to sign up tab and trigger modal display
+            toggleAuthTab('signup');
+            openModal('auth-modal');
+        }
+
+    } catch (err) {
+        console.error("Submission pipeline error:", err);
+        alert(err.message);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit My Application";
+    }
+}
+
+        async function executePaymentLogTransmission(event) {
+            event.preventDefault();
+            if (!globalUserSession) return;
+            
+            const submitBtn = document.getElementById('billing-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "VERIFYING TRANSMISSION...";
+
+            const paymentPayload = {
+                profile_id: globalUserSession.user.id,
+                amount: document.getElementById('billing_amount').value,
+                reference_number: document.getElementById('billing_reference').value.trim(),
+                proof_url: document.getElementById('billing_proof_url').value.trim()
+            };
+
+            const { error } = await supabaseClient
+                .from('payments')
+                .insert([paymentPayload]);
+
+            if (error) {
+                alert('Could not submit payment note: ' + error.message);
+            } else {
+                alert('Payment proof sent securely!');
+                closeModal('billing-portal-modal');
+                document.getElementById('billingNotificationForm').reset();
+            }
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Confirm Payment Notice";
+        }
+
+        function openBillingPortal() {
+            if (!globalUserProfile) return;
+            document.getElementById('billing-client-name').innerText = globalUserProfile.name;
+            document.getElementById('billing-payment-status').innerText = globalUserProfile.payment_status || "Pending";
+            document.getElementById('billing-invoice-ref').innerText = `PT-INV-${globalUserSession.user.id.substring(0,5).toUpperCase()}`;
+            openModal('billing-portal-modal');
+        }
+
+        // ==========================================
+        // 🖥️ UI SYNC ENGINE LOGIC
+        // ==========================================
+        function updateUIForLoggedInState(email, profile) {
+            document.getElementById('dashboard-welcome-msg').innerText = `Logged in securely: ${profile.name} (${email})`;
+            document.getElementById('dashboard-role-badge').innerText = profile.role === 'client' ? 'Business Client' : 'Remote Assistant';
+            document.getElementById('authenticated-dashboard').classList.remove('hidden');
+            
+            const authBtnText = document.getElementById('auth-btn-text');
+            const authStatusBtn = document.getElementById('auth-status-btn');
+            if (authBtnText) authBtnText.innerText = "Your Account Panel";
+            if (authStatusBtn) {
+                authStatusBtn.className = "bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm flex items-center gap-2";
+            }
+
+            if (profile.role === 'client') {
+                // HIDE the layouts you don't want clients to see anymore
+                document.getElementById('hero-landing-pane').classList.add('hidden');
+                document.getElementById('client-portal').classList.add('hidden');
+                document.getElementById('main-content-informational-wrapper').classList.add('hidden');
+                document.getElementById('client-form').classList.add('hidden');
+                document.getElementById('careers-section').classList.add('hidden');
+                
+                // SHOW the Workspace Dashboard
+                const workspace = document.getElementById('client-dashboard-workspace');
+                workspace.classList.remove('hidden');
+
+                // FORCE the booking and contact sections to remain completely visible
+                document.getElementById('booking-section').classList.remove('hidden');
+                document.getElementById('contact-section').classList.remove('hidden');
+
+                if (profile.payment_status === "Pending") {
+                    renderPendingPaymentDashboard(workspace);
+                } else {
+                    renderTalentPoolMatchingDashboard(workspace, profile.name);
+                }
+            }
+        }
+
+        function updateUIForLoggedOutState() {
+            document.getElementById('authenticated-dashboard').classList.add('hidden');
+            const authBtnText = document.getElementById('auth-btn-text');
+            if (authBtnText) authBtnText.innerText = "Portal Login";
+            
+            const authStatusBtn = document.getElementById('auth-status-btn');
+            if (authStatusBtn) {
+                authStatusBtn.className = "bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm flex items-center gap-2";
+            }
+            
+            // Bring everything back safely for logouts
+            document.getElementById('client-dashboard-workspace').classList.add('hidden');
+            document.getElementById('main-content-informational-wrapper').classList.remove('hidden');
+            document.getElementById('hero-landing-pane').classList.remove('hidden');
+            document.getElementById('client-portal').classList.remove('hidden');
+            document.getElementById('client-form').classList.remove('hidden');
+            document.getElementById('careers-section').classList.remove('hidden');
+            document.getElementById('booking-section').classList.remove('hidden');
+            document.getElementById('contact-section').classList.remove('hidden');
+        }
+
+        function updateUIForLoggedOutState() {
+            document.getElementById('authenticated-dashboard').classList.add('hidden');
+            const authBtnText = document.getElementById('auth-btn-text');
+            if (authBtnText) authBtnText.innerText = "Portal Login";
+            
+            const authStatusBtn = document.getElementById('auth-status-btn');
+            if (authStatusBtn) {
+                authStatusBtn.className = "bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-sm flex items-center gap-2";
+            }
+            
+            document.getElementById('client-dashboard-workspace').classList.add('hidden');
+            document.getElementById('main-content-informational-wrapper').classList.remove('hidden');
+            document.getElementById('hero-landing-pane').classList.remove('hidden');
+            document.getElementById('client-portal').classList.remove('hidden');
+        }
+
+        function renderPendingPaymentDashboard(container) {
+            container.innerHTML = `
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 sm:p-12 max-w-xl mx-auto text-center my-16 shadow-md">
+                    <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mb-6 mx-auto text-2xl border border-amber-200 shadow-sm">
+                        <i class="fa-solid fa-credit-card animate-pulse"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Account Verified!</h3>
+                    <p class="text-sm text-slate-500 font-normal leading-relaxed mb-6">
+                        Your account is secure. Please submit payment info for your starting invoice to view our remote talent tracking boards.
+                    </p>
+                    <button onclick="openBillingPortal()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-6 py-3.5 rounded-xl transition shadow-md flex items-center gap-2 mx-auto uppercase">
+                        <i class="fa-solid fa-file-invoice-dollar text-sm"></i> Pay Invoice &amp; Unlock Portal
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderTalentPoolMatchingDashboard(container, name) {
+            container.innerHTML = `
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 border-b border-slate-200 pb-6">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Welcome, ${name}</h2>
+                        <p class="text-xs text-slate-500 font-normal mt-1">Status: <span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[10px]">VERIFIED PARTNER</span>. Browse open candidates below.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="px-2 py-1 rounded bg-indigo-50 text-indigo-700 font-bold text-[10px] uppercase border border-indigo-100">Medical / Clinic Ops</span>
+                            <h4 class="font-bold text-slate-900 text-base mt-3 mb-1">Candidate Profile #104</h4>
+                            <p class="text-xs text-slate-500 font-normal mb-4">5 years clinical scheduling experience. Fluent English, trained in HIPAA workflows.</p>
+                        </div>
+                        <button onclick="alert('Interview booking request sent securely to coordinators.')" class="w-full bg-slate-900 text-white py-2 rounded-xl text-xs font-semibold hover:bg-slate-800 transition">Request Interview</button>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="px-2 py-1 rounded bg-blue-50 text-blue-700 font-bold text-[10px] uppercase border border-blue-100">Real Estate</span>
+                            <h4 class="font-bold text-slate-900 text-base mt-3 mb-1">Candidate Profile #312</h4>
+                            <p class="text-xs text-slate-500 font-normal mb-4">4 years managing lease renewals, listing configurations, and maintenance requests.</p>
+                        </div>
+                        <button onclick="alert('Interview booking request sent securely to coordinators.')" class="w-full bg-slate-900 text-white py-2 rounded-xl text-xs font-semibold hover:bg-slate-800 transition">Request Interview</button>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="px-2 py-1 rounded bg-emerald-50 text-emerald-700 font-bold text-[10px] uppercase border border-emerald-100">General Admin</span>
+                            <h4 class="font-bold text-slate-900 text-base mt-3 mb-1">Candidate Profile #089</h4>
+                            <p class="text-xs text-slate-500 font-normal mb-4">Highly organized virtual assistant trained directly on invoicing, HubSpot CRM, and bookkeeping.</p>
+                        </div>
+                        <button onclick="alert('Interview booking request sent securely to coordinators.')" class="w-full bg-slate-900 text-white py-2 rounded-xl text-xs font-semibold hover:bg-slate-800 transition">Request Interview</button>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
